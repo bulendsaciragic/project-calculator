@@ -9,12 +9,24 @@ let displayValue = '';
 let shouldClearDisplay = false;
 let equalsOperation;
 
-function addOperation () {
+function addOperation (num1, num2) {
     return num1 + num2;
 }
 
+function subtractOperation (num1, num2) {
+    return num1 - num2;
+}
+
+function multiplyOperation (num1, num2) {
+    return num1 * num2;
+}
+
+function divideOperation (num1, num2) {
+    return num1 / num2;
+}
+
 const numbersButtons = document.querySelectorAll(".number");
-const operatorsButtons = document.querySelectorAll(".operator");
+const operatorsButtons = document.querySelectorAll('.operator');
 const display = document.querySelector("#display");
 const clearButton = document.querySelector("#clear");
 
@@ -37,21 +49,42 @@ numbersButtons.forEach(function(number){
 
 });
 
-addButton.addEventListener("click", function(){
-    num1 = Number(displayValue);
-    operator = addOperation;
-    displayValue = '';
-    shouldClearDisplay = true;
+operatorsButtons.forEach( button => {
+    button.addEventListener("click", function(){
+        num1 = Number(displayValue);
+        displayValue = '';  
+        shouldClearDisplay = true;
+
+        switch (event.target.id) {
+            case 'add':
+                operator = addOperation;
+                break;
+            case 'subtract':
+                operator = subtractOperation;
+                break;
+            case 'multiply':
+                operator = multiplyOperation;
+                break;
+            case 'divide':
+                operator = divideOperation;
+                break;
+            default:
+                console.log('Unknown operation');
+        }
+    })
 })
+
+
 
 equalsButton.addEventListener("click", function(){
     num2 = Number(displayValue);
-    equalsOperation = num1 + num2;
-    displayValue = equalsOperation;
-    display.textContent = equalsOperation;
+    displayValue = operator(num1, num2);
+    display.textContent = operator(num1, num2);
 })
 
 clearButton.addEventListener("click", function () {
     display.textContent = " ";
     displayValue = ''; 
+    num1 = null;
+    num2 = null;
 });
