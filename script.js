@@ -1,13 +1,11 @@
-// Klik na dugmad - Update displayvalue
-// klik na operator - store display value to num1
-// Klik na dugman  - reset displayvalue, update display value
-// Klik na jednako - pokrece funkciju num 1 - operator - num2, update display value
+// Osnovne varijable
 
-let num1;
-let num2;
+let num1 = null;
+let num2 = null;
+let operator = null;
 let displayValue = '';
-let shouldClearDisplay = false;
-let equalsOperation;
+
+// Funkcije za matematicke operacije
 
 function addOperation (num1, num2) {
     return num1 + num2;
@@ -25,35 +23,37 @@ function divideOperation (num1, num2) {
     return num1 / num2;
 }
 
-const numbersButtons = document.querySelectorAll(".number");
-const operatorsButtons = document.querySelectorAll('.operator');
+// Selektori 
+
 const display = document.querySelector("#display");
+const operatorButtons = document.querySelectorAll('.operator');
 const clearButton = document.querySelector("#clear");
+const equalsButton = document.querySelector("#equals")
 
-const addButton = document.querySelector("#add");
-const equalsButton = document.querySelector("#equals");
+// Funkcija unos brojeva
 
-numbersButtons.forEach(function(number){
-
-    number.addEventListener("click", function(){
-    if (shouldClearDisplay) {
-        display.textContent = ''; // Clear the display
-        displayValue = ''; // Reset displayValue
-        shouldClearDisplay = false; // Reset the flag
-        }
-    const numberValue = number.textContent;
-    displayValue += numberValue;
-    const newDisplayValue = document.createTextNode(numberValue);
+function number(n) {
+    displayValue += n;
+    const newDisplayValue = document.createTextNode(displayValue);
+    display.textContent = ''; 
     display.appendChild(newDisplayValue);
-    });
+}
 
-});
+// Funkcija za izbor operacije
 
-operatorsButtons.forEach( button => {
+operatorButtons.forEach( button => {
+
     button.addEventListener("click", function(){
-        num1 = Number(displayValue);
+        if (num1 === null) {
+            num1 = Number(displayValue);
+            } else {
+                num2 = Number(displayValue);
+                num1 = operator(num1, num2);
+                display.textContent = num1;
+            }
+
         displayValue = '';  
-        shouldClearDisplay = true;
+        // shouldClearDisplay = true;
 
         switch (event.target.id) {
             case 'add':
@@ -71,20 +71,29 @@ operatorsButtons.forEach( button => {
             default:
                 console.log('Unknown operation');
         }
+       
     })
 })
 
-
+// Funkcija za izracunavanje
 
 equalsButton.addEventListener("click", function(){
-    num2 = Number(displayValue);
-    displayValue = operator(num1, num2);
-    display.textContent = operator(num1, num2);
+    if (num1 !== null && operator) {
+        num2 = Number(displayValue);
+        displayValue = operator(num1, num2);
+        display.textContent = operator(num1, num2);
+        num1 = null;
+        num2 = null;
+        operator = null;
+        }
 })
+
+// Funkcija za ciscenje displeja i resetovanje vrijednosti
 
 clearButton.addEventListener("click", function () {
     display.textContent = " ";
     displayValue = ''; 
     num1 = null;
     num2 = null;
+    operator = null;
 });
