@@ -13,27 +13,26 @@
         <div id="display"></div>
         
         <div id="functions">
-            <button class="function" id="clear">Clear</button>
-            <!-- <button class="function">Delete</button> -->
+            <button class="function" onclick="clearDisplay()" id="clear">Clear</button>
         </div>
 
         <div id="inputs">
             <button class="number" onclick="number(7)">7</button>
             <button class="number" onclick="number(8)">8</button>
             <button class="number" onclick="number(9)">9</button>
-            <button class="operator" id="divide">÷</button>
+            <button class="operator" onclick="setOperator('divide')" id="divide">÷</button>
             <button class="number" onclick="number(4)">4</button>
             <button class="number" onclick="number(5)">5</button>
             <button class="number" onclick="number(6)">6</button>
-            <button class="operator" id="multiply">*</button>
+            <button class="operator" onclick="setOperator('multiply')" id="multiply">*</button>
             <button class="number" onclick="number(1)">1</button>
             <button class="number" onclick="number(2)">2</button>
             <button class="number" onclick="number(3)">3</button>
-            <button class="operator" id="subtract">-</button>
+            <button class="operator" onclick="setOperator('subtract')" id="subtract">-</button>
             <button class="number" onclick="number('.')">.</button>
             <button class="number" onclick="number(0)">0</button>
-            <button id="equals">=</button>
-            <button class="operator" id="add">+</button>
+            <button onclick="calculate()" id="equals">=</button>
+            <button class="operator"  id="add">+</button>
         </div>
     </div>
 
@@ -43,3 +42,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+<!-- 
+onclick="setOperator('add')" -->
