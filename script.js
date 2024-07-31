@@ -4,6 +4,7 @@ let num1 = null;
 let num2 = null;
 let operator = null;
 let displayValue = '';
+let history = [];
 
 // Funkcije za matematicke operacije
 
@@ -30,6 +31,7 @@ const display = document.querySelector("#display");
 // Funkcija unos brojeva
 
 function number(n) {
+    saveState();
     displayValue += n;
     const newDisplayValue = document.createTextNode(displayValue);
     display.textContent = ''; 
@@ -39,9 +41,10 @@ function number(n) {
 // Funkcija za izbor operacije
 
 function setOperator(op) {
+    saveState();
     if (num1 === null) {
         num1 = Number(displayValue);
-    } else {
+    } else if (operator) {
         num2 = Number(displayValue);
         num1 = operator(num1, num2);
         display.textContent = num1;
@@ -70,6 +73,7 @@ function setOperator(op) {
 
 function calculate() {
     if (num1 !== null && operator) {
+        saveState();
         num2 = Number(displayValue);
         displayValue = operator(num1, num2);
         display.textContent = operator(num1, num2);
@@ -82,6 +86,7 @@ function calculate() {
 // Funkcija za ciscenje displeja i resetovanje vrijednosti
 
 function clearDisplay() {
+    saveState();
     display.textContent = " ";
     displayValue = ''; 
     num1 = null;
@@ -110,7 +115,8 @@ const keyToFunction = {
     '+': () => setOperator('add'),
     '=': () => calculate(),
     'Enter': () => calculate(),
-    'c': () => clearDisplay()
+    'c': () => clearDisplay(),
+    'u': () => undo()
 };
 
 document.addEventListener('keydown', (event) => {
@@ -119,3 +125,33 @@ document.addEventListener('keydown', (event) => {
         func();
     }
 });
+
+// Funkcija za spasavanje trenutnog stanja
+
+function saveState() {
+    history.push({
+        num1: num1,
+        num2: num2,
+        operator: operator,
+        displayValue: displayValue,
+        displayText: display.textContent
+});
+}
+
+// Funkcija za vracanje na prethodno stanje
+
+function undo() {
+    const previousState = history.pop();
+    if (previousState) {
+        num1 = previousState.num1;
+        num2 = previousState.num2;
+        operator = null;
+        displayValue = previousState.displayValue;
+        updateDisplay(previousState.displayText);
+    }
+}
+
+// Funkcija za osvezavanje displeja
+function updateDisplay(value) {
+    display.textContent = value;
+}

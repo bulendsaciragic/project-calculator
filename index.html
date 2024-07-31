@@ -13,6 +13,7 @@
         <div id="display"></div>
         
         <div id="functions">
+            <button class="function" id="undo" onclick="undo()">Undo</button>
             <button class="function" onclick="clearDisplay()" id="clear">Clear</button>
         </div>
 
@@ -32,7 +33,7 @@
             <button class="number" onclick="number('.')">.</button>
             <button class="number" onclick="number(0)">0</button>
             <button onclick="calculate()" id="equals">=</button>
-            <button class="operator"  id="add">+</button>
+            <button class="operator" onclick="setOperator('add')" id="add">+</button>
         </div>
     </div>
 
@@ -42,5 +43,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-<!-- 
-onclick="setOperator('add')" -->
