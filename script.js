@@ -32,10 +32,17 @@ const display = document.querySelector("#display");
 
 function number(n) {
     saveState();
-    displayValue += n;
-    const newDisplayValue = document.createTextNode(displayValue);
-    display.textContent = ''; 
-    display.appendChild(newDisplayValue);
+
+    if (n === '.') {
+        if (!displayValue.includes('.')) {
+            displayValue += n;
+        }
+    } else {
+        displayValue += n;
+    };
+
+    updateDisplay(displayValue);
+
 }
 
 // Funkcija za izbor operacije
