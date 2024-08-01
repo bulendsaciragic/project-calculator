@@ -84,22 +84,31 @@ function calculate() {
         num2 = Number(displayValue);
         displayValue = operator(num1, num2);
         display.textContent = operator(num1, num2);
-        num1 = null;
-        num2 = null;
-        operator = null;
-        }
+        
+        if (operator = divideOperation && num2 === 0) {
+            display.textContent = 'LOL';
+            displayValue = ''; 
+            num1 = null;
+            num2 = null;
+            operator = null;
+        };  
+    }   
 }
 
 // Funkcija za ciscenje displeja i resetovanje vrijednosti
 
 function clearDisplay() {
     saveState();
-    display.textContent = " ";
+    display.textContent = '';
     displayValue = ''; 
     num1 = null;
     num2 = null;
     operator = null;
 }
+
+if (operator = divideOperation && num2 === 0) {
+    display.textContent = 'LOL';
+};
 
 // Keyboard support
 
@@ -158,7 +167,7 @@ function undo() {
     }
 }
 
-// Funkcija za osvezavanje displeja
+// Funkcija za update displeja
 function updateDisplay(value) {
     display.textContent = value;
-}
+};
