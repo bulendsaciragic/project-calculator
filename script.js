@@ -86,6 +86,7 @@ function calculate() {
         display.textContent = operator(num1, num2);
         
         if (operator = divideOperation && num2 === 0) {
+            saveState();
             display.textContent = 'LOL';
             displayValue = ''; 
             num1 = null;
